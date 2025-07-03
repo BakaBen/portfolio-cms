@@ -160,51 +160,32 @@
             <div class="container mx-auto px-20">
                 <h2 class="text-3xl font-bold text-center mb-12">Featured <span class="text-primary">Projects</span></h2>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Project 1 -->
+                    <!-- Project Card -->
+                     @foreach($projects as $project)
                     <div class="rounded-xl overflow-hidden shadow-md hover:shadow-lg transition bg-gray-700">
                         <div class="h-48 overflow-hidden">
-                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/fc8f7caa-3710-47fb-979a-90647205d224.png" alt="Dashboard application showing analytics with charts and metrics on dark background" class="w-full h-full object-cover hover:scale-105 transition duration-500" />
+                            @if($project->thumbnail)
+                            <img src="{{ asset('storage/' . $project->thumbnail) }}" alt="Project image" class="w-full h-full object-cover hover:scale-105 transition duration-500" />
+                            @else
+                            <img src="https://picsum.photos/200/300" alt="Dashboard application showing analytics with charts and metrics on dark background" class="w-full h-full object-cover hover:scale-105 transition duration-500" />
+                            @endif
                         </div>
                         <div class="p-6 bg-gray-700">
-                            <h3 class="text-xl font-semibold mb-2">Analytics Dashboard</h3>
-                            <p class="text-gray-600 mb-4">Interactive data visualization platform built with React and D3.js</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="bg-primary bg-opacity-10 text-primary px-3 py-1 rounded-full text-sm">React</span>
-                                <span class="bg-primary bg-opacity-10 text-primary px-3 py-1 rounded-full text-sm">D3.js</span>
-                                <span class="bg-primary bg-opacity-10 text-primary px-3 py-1 rounded-full text-sm">Node.js</span>
-                            </div>
+                            <h3 class="text-xl font-semibold mb-2">{{ $project->name }}</h3>
+                            <p class="text-gray-600 mb-4">{{ $project->description }}</p>
+                            @if($project->categories?->count())
+                                <div class="flex flex-wrap gap-2 mt-2">
+                                    @foreach($project->categories as $category)
+                                        <span class="bg-primary bg-opacity-10 text-primary px-3 py-1 rounded-full text-sm">
+                                            {{ $category->name }}
+                                        </span>
+                                    @endforeach
+                                </div>
+                            @endif
+
                         </div>
                     </div>
-                    <!-- Project 2 -->
-                    <div class="rounded-xl overflow-hidden shadow-md hover:shadow-lg transition">
-                        <div class="h-48 overflow-hidden">
-                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/79fd6099-8233-4b3e-b9e2-23eb4aad1ee0.png" alt="E-commerce website product page showing fashionable items with clean modern design" class="w-full h-full object-cover hover:scale-105 transition duration-500" />
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-2">E-Commerce Platform</h3>
-                            <p class="text-gray-600 mb-4">Full-featured online store with payment integration</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="bg-primary bg-opacity-10 text-primary px-3 py-1 rounded-full text-sm">Vue.js</span>
-                                <span class="bg-primary bg-opacity-10 text-primary px-3 py-1 rounded-full text-sm">Stripe</span>
-                                <span class="bg-primary bg-opacity-10 text-primary px-3 py-1 rounded-full text-sm">MongoDB</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Project 3 -->
-                    <div class="rounded-xl overflow-hidden shadow-md hover:shadow-lg transition">
-                        <div class="h-48 overflow-hidden">
-                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b5f04041-5bf8-4078-b998-8488882b9716.png" alt="Task management app interface showing kanban board with colorful cards" class="w-full h-full object-cover hover:scale-105 transition duration-500" />
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-2">Task Management App</h3>
-                            <p class="text-gray-600 mb-4">Collaborative productivity tool for teams</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="bg-primary bg-opacity-10 text-primary px-3 py-1 rounded-full text-sm">React</span>
-                                <span class="bg-primary bg-opacity-10 text-primary px-3 py-1 rounded-full text-sm">Firebase</span>
-                                <span class="bg-primary bg-opacity-10 text-primary px-3 py-1 rounded-full text-sm">Redux</span>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
                 <div class="text-center mt-12">
                     <a href="#" class="text-primary font-semibold hover:underline">View All Projects →</a>

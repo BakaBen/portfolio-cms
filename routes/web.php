@@ -4,10 +4,10 @@ use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\CategoryController;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [ProjectController::class, 'profile'])->name('home');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
@@ -19,6 +19,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/profile', Profile::class)->name('settings.profile');
     Route::get('settings/password', Password::class)->name('settings.password');
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
+    Route::get('projects', [ProjectController::class, 'projectSet'])->name('projects.index');    
+    Route::resource('projects', ProjectController::class)->except(['index']);
+    Route::resource('categories', CategoryController::class);
 });
 
 require __DIR__.'/auth.php';
