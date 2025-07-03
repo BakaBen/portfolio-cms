@@ -22,6 +22,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('projects', [ProjectController::class, 'projectSet'])->name('projects.index');    
     Route::resource('projects', ProjectController::class)->except(['index']);
     Route::resource('categories', CategoryController::class);
+    Route::get('/trash', [ProjectController::class, 'trash'])->name('projects.trash');
+    Route::post('projects/{project}/restore', [ProjectController::class, 'restore'])->name('projects.restore');
+    Route::delete('projects/{project}/force-delete', [ProjectController::class, 'forceDelete'])->name('projects.force-delete');
 });
 
 require __DIR__.'/auth.php';

@@ -119,4 +119,25 @@ class ProjectController extends Controller
 
         return redirect()->route('projects.index')->with('success', 'Project deleted successfully');
     }
+
+    public function restore(Project $project)
+    {
+        Project::withTrashed()->findOrFail($project)->restore();
+        return redirect()->back()->with('success', 'Project restored successfully');
+    }
+
+    public function forceDelete(Project $project)
+    {
+        $project = Project::withTrashed()->findOrFail($project->id);
+        Storage::disk('public')->delete($project->thumbnail);
+
+        $project->forceDelete();
+        return redirect()->route('projects.trash')->with('success', 'Project deleted permanently');
+    }
+
+    public function trash()
+    {
+        $projects = Project::onlyTrashed()->latest()->get();
+        return view('projects.trash', compact('projects'));
+    }
 }
